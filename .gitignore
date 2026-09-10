@@ -1,0 +1,12 @@
+*.pyc
+.DS_Store
+_build/
+target/
+.mooncakes/
+.moon/
+.moonagent/
+__pycache__/
+*.bundle
+*application*.md
+*申报*
+_gen_*.py
