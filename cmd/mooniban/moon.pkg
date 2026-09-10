@@ -1,0 +1,8 @@
+import {
+  "LuoYunze06/mooniban" @iban,
+  "moonbitlang/core/env",
+  "moonbitlang/x/fs",
+  "moonbitlang/x/sys",
+}
+
+pkgtype(kind: "executable")
