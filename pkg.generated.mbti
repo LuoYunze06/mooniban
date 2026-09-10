@@ -1,0 +1,75 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "LuoYunze06/mooniban"
+
+import {
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub fn build(String, String) -> Result[Iban, IbanError]
+
+pub fn check_digits_for(String, String) -> Result[String, IbanError]
+
+pub fn checksum_remainder(String) -> Result[Int, IbanError]
+
+pub fn compact_text(String) -> String
+
+pub fn country_spec(String) -> CountrySpec?
+
+pub fn explain(String) -> String
+
+pub fn parse(String) -> Result[Iban, IbanError]
+
+pub fn pretty_groups(String) -> String
+
+pub fn registered_countries() -> Array[String]
+
+pub fn run_command(Array[String]) -> Result[String, IbanError]
+
+pub fn validate(String) -> Result[Iban, IbanError]
+
+// Errors
+
+// Types and methods
+pub(all) struct CountrySpec {
+  code : String
+  length : Int
+  bban_pattern : String
+  bank : Int
+  branch : Int
+  account : Int
+} derive(Eq, @debug.Debug)
+
+pub(all) struct Iban {
+  country : String
+  check_digits : String
+  bban : String
+  compact : String
+} derive(Eq, @debug.Debug)
+pub fn Iban::account(Self) -> String?
+pub fn Iban::bank(Self) -> String?
+pub fn Iban::branch(Self) -> String?
+pub fn Iban::pretty(Self) -> String
+pub fn Iban::spec(Self) -> CountrySpec?
+
+pub(all) enum IbanError {
+  EmptyInput
+  InvalidCharset(Int)
+  TooShort(Int)
+  TooLong(Int)
+  InvalidCountry(String)
+  UnknownCountry(String)
+  LengthMismatch(String, Int, Int)
+  BadChecksum(Int)
+  BbanPattern(String, Int)
+  MissingOperand(String)
+  UnknownCommand(String)
+} derive(Eq, @debug.Debug)
+pub fn IbanError::code(Self) -> String
+pub fn IbanError::format(Self) -> String
+pub fn IbanError::message(Self) -> String
+
+// Type aliases
+
+// Traits
+
