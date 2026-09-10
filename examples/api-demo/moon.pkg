@@ -1,0 +1,5 @@
+import {
+  "LuoYunze06/mooniban",
+}
+
+pkgtype(kind: "executable")
