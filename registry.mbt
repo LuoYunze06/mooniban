@@ -60,7 +60,7 @@ fn registry() -> Array[CountrySpec] {
     {
       code: "BG",
       length: 22,
-      bban_pattern: "4a4n6n8n",
+      bban_pattern: "4a4n2n8c",
       bank: 4,
       branch: 4,
       account: 8,
@@ -492,7 +492,7 @@ fn registry() -> Array[CountrySpec] {
     {
       code: "SC",
       length: 31,
-      bban_pattern: "4a2n3n16n3a",
+      bban_pattern: "4a2n2n16n3a",
       bank: 4,
       branch: 2,
       account: 16,
