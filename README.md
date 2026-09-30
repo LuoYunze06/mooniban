@@ -11,18 +11,19 @@ MoonIBAN 用 MoonBit 实现国际银行账号（IBAN）的离线识别：去掉�
 
 ## 安装与首次运行
 
-需要 MoonBit 工具链。CLI 读文件依赖 `moonbitlang/x@0.5.4`，用 `moon update` 下载。验收脚本需要 Python 3。JS 目标需要 Node.js。本机若没有 C 编译器，不要把 native 运行时缺失当成通过。
+需要 `moonc >= 0.10.14`；仓库通过 `.moonbit-version` 固定 `0.10.14+7d59c7ec9`。CLI 读文件依赖 `moonbitlang/x@0.5.4`，用 `moon update` 下载。验收脚本需要 Python 3。JS 目标需要 Node.js。本机若没有 C 编译器，不要把 native 运行时缺失当成通过。
 
 ```sh
 git clone https://github.com/LuoYunze06/mooniban.git
 cd mooniban
 moon update
+python scripts/check_toolchain.py
 moon check --target wasm-gc --deny-warn
 moon test --target wasm-gc --deny-warn
 moon run examples/api-demo --target wasm-gc
 ```
 
-本地验证工具链为 `moon 0.1.20260713` / `moonc v0.10.4+2cc641edf`。CI 使用 `.moonbit-version` 固定同一编译器。当前未发布到 mooncakes.io；查重完成不等于已经发布。
+验收基线为 `moon 0.1.20260920` / `moonc v0.10.14+7d59c7ec9`，CI 使用 `.moonbit-version` 安装并由 `scripts/check_toolchain.py` 拒绝低版本。`LuoYunze06/mooniban@0.1.0` 已发布到 MoonCakes；后续版本由维护者手动发布。
 
 ## 三个可复现使用场景
 
@@ -106,4 +107,4 @@ python scripts/smoke.py --target wasm-gc
 python scripts/readiness.py --skip-native-runtime
 ```
 
-CI 在 Ubuntu 上对 wasm-gc、wasm、js、native 做 check/build/test，并运行真实 CLI 与 `examples/api-demo`。许可证为 Apache-2.0。第三方说明见 `THIRD_PARTY.md`，AI 使用见 `AI_USAGE.md`。
+当前 MoonBit 测试套件共 22 项，覆盖公开样例、72 国登记表往返、边界与错误诊断。CI 在 Ubuntu 上对 wasm-gc、wasm、js、native 做 check/build/test，并运行真实 CLI 与 `examples/api-demo`。许可证为 Apache-2.0。验收证据见 `docs/competition/acceptance.md`，第三方说明见 `THIRD_PARTY.md`，AI 使用见 `AI_USAGE.md`。

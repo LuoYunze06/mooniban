@@ -28,6 +28,10 @@ run(["validate", "DE89 3704 0044 0532 0130 00"], expected="valid DE89 3704 0044 
 run(["format", "gb82west12345698765432"], expected="GB82 WEST 1234 5698 7654 32")
 run(["build", "NL", "ABNA0417164300"], expected="NL91 ABNA 0417 1643 00")
 run(["checksum", "FR1420041010050500013M02606"], expected="remainder=1")
+parsed = run(["parse", "DE89 3704 0044 0532 0130 00"])
+assert "bank=37040044" in parsed and "account=0532013000" in parsed
+explained = run(["explain", "DE88370400440532013000"])
+assert "IBAN008" in explained and explained.startswith("invalid compact=")
 countries = run(["countries"])
 assert "DE" in countries.split(",") and "GB" in countries.split(",")
 run(["validate", "DE88370400440532013000"], fails=True)
