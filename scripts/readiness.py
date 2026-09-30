@@ -25,7 +25,7 @@ def run(*command, tests=False):
         stderr=subprocess.STDOUT,
     )
     output = None
-    for encoding in ("utf-8", locale.getpreferredencoding(False)):
+    for encoding in ("utf-8", locale.getpreferredencoding(False), "gbk"):
         try:
             output = result.stdout.decode(encoding)
             break

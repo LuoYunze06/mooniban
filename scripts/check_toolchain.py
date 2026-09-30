@@ -17,7 +17,7 @@ def parse_moonc_version(output: str) -> Tuple[int, int, int]:
 
 
 def decode_output(data: bytes) -> str:
-    for encoding in ("utf-8", locale.getpreferredencoding(False)):
+    for encoding in ("utf-8", locale.getpreferredencoding(False), "gbk"):
         try:
             return data.decode(encoding)
         except UnicodeDecodeError:
