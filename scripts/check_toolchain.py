@@ -1,0 +1,37 @@
+"""Enforce the compiler floor required by the September 2026 acceptance guide."""
+from __future__ import annotations
+
+import re
+import subprocess
+from typing import Tuple
+
+MINIMUM_MOONC = (0, 10, 14)
+
+
+def parse_moonc_version(output: str) -> Tuple[int, int, int]:
+    match = re.search(r"(?m)^moonc v(\d+)\.(\d+)\.(\d+)(?:[+\s]|$)", output)
+    if not match:
+        raise ValueError("could not find moonc semantic version in `moon version --all`")
+    return tuple(int(part) for part in match.groups())
+
+
+def main() -> None:
+    result = subprocess.run(
+        ["moon", "version", "--all"],
+        check=True,
+        text=True,
+        encoding="utf-8",
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+    )
+    print(result.stdout, end="")
+    actual = parse_moonc_version(result.stdout)
+    if actual < MINIMUM_MOONC:
+        required = ".".join(str(part) for part in MINIMUM_MOONC)
+        found = ".".join(str(part) for part in actual)
+        raise SystemExit(f"moonc {found} is below the required {required}")
+    print("MoonBit compiler floor satisfied:", ".".join(str(part) for part in actual))
+
+
+if __name__ == "__main__":
+    main()

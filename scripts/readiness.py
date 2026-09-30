@@ -43,7 +43,7 @@ def interfaces():
     return data
 
 
-run("moon", "version", "--all")
+run(sys.executable, "scripts/check_toolchain.py")
 run("moon", "fmt", "--check")
 for target in ["wasm-gc", "wasm", "js", "native"]:
     run("moon", "check", "--target", target, "--deny-warn")

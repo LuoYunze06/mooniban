@@ -39,6 +39,9 @@ pub(all) struct CountrySpec {
   branch : Int
   account : Int
 } derive(Eq, @debug.Debug)
+pub fn CountrySpec::equal(Self, Self) -> Bool
+pub fn CountrySpec::not_equal(Self, Self) -> Bool
+pub fn CountrySpec::to_repr(Self) -> @debug.Repr
 
 pub(all) struct Iban {
   country : String
@@ -49,8 +52,11 @@ pub(all) struct Iban {
 pub fn Iban::account(Self) -> String?
 pub fn Iban::bank(Self) -> String?
 pub fn Iban::branch(Self) -> String?
+pub fn Iban::equal(Self, Self) -> Bool
+pub fn Iban::not_equal(Self, Self) -> Bool
 pub fn Iban::pretty(Self) -> String
 pub fn Iban::spec(Self) -> CountrySpec?
+pub fn Iban::to_repr(Self) -> @debug.Repr
 
 pub(all) enum IbanError {
   EmptyInput
@@ -66,10 +72,12 @@ pub(all) enum IbanError {
   UnknownCommand(String)
 } derive(Eq, @debug.Debug)
 pub fn IbanError::code(Self) -> String
+pub fn IbanError::equal(Self, Self) -> Bool
 pub fn IbanError::format(Self) -> String
 pub fn IbanError::message(Self) -> String
+pub fn IbanError::not_equal(Self, Self) -> Bool
+pub fn IbanError::to_repr(Self) -> @debug.Repr
 
 // Type aliases
 
 // Traits
-

@@ -80,7 +80,12 @@ pub fn parse(input : String) -> Result[Iban, IbanError] {
           if rem != 1 {
             Err(BadChecksum(rem))
           } else {
-            Ok({ country, check_digits: compact[2:4].to_owned(), bban, compact })
+            Ok({
+              country,
+              check_digits: compact[2:4].to_owned(),
+              bban,
+              compact,
+            })
           }
         }
       }

@@ -7,6 +7,12 @@ pub(all) struct Iban {
 } derive(Eq, Debug)
 
 ///|
+pub extend Iban with Eq::{equal, not_equal}
+
+///|
+pub extend Iban with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub(all) enum IbanError {
   EmptyInput
   InvalidCharset(Int)
@@ -22,6 +28,12 @@ pub(all) enum IbanError {
 } derive(Eq, Debug)
 
 ///|
+pub extend IbanError with Eq::{equal, not_equal}
+
+///|
+pub extend IbanError with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub(all) struct CountrySpec {
   code : String
   length : Int
@@ -30,6 +42,12 @@ pub(all) struct CountrySpec {
   branch : Int
   account : Int
 } derive(Eq, Debug)
+
+///|
+pub extend CountrySpec with Eq::{equal, not_equal}
+
+///|
+pub extend CountrySpec with @moonbitlang/core/debug.Debug::{to_repr}
 
 ///|
 pub fn Iban::pretty(self : Iban) -> String {
