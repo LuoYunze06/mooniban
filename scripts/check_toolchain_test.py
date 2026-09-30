@@ -1,6 +1,6 @@
 import unittest
 
-from check_toolchain import MINIMUM_MOONC, parse_moonc_version
+from check_toolchain import MINIMUM_MOONC, decode_output, parse_moonc_version
 
 
 class ToolchainVersionTests(unittest.TestCase):
@@ -11,6 +11,9 @@ class ToolchainVersionTests(unittest.TestCase):
     def test_rejects_output_without_moonc(self):
         with self.assertRaisesRegex(ValueError, "could not find moonc"):
             parse_moonc_version("moon 0.1.20260920\n")
+
+    def test_decodes_localized_windows_output(self):
+        self.assertEqual(decode_output("工具链".encode("gbk")), "工具链")
 
     def test_floor_matches_acceptance_guide(self):
         self.assertEqual(MINIMUM_MOONC, (0, 10, 14))

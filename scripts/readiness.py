@@ -1,5 +1,6 @@
 """Reproduce the engineering gate; skipping native runtime is explicit, never a pass."""
 import argparse
+import locale
 from pathlib import Path
 import re
 import subprocess
@@ -20,16 +21,23 @@ def run(*command, tests=False):
     result = subprocess.run(
         command,
         cwd=str(ROOT),
-        text=True,
-        encoding="utf-8",
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
     )
-    print(result.stdout, end="", flush=True)
+    output = None
+    for encoding in ("utf-8", locale.getpreferredencoding(False)):
+        try:
+            output = result.stdout.decode(encoding)
+            break
+        except UnicodeDecodeError:
+            pass
+    if output is None:
+        output = result.stdout.decode("utf-8", errors="replace")
+    print(output, end="", flush=True)
     if result.returncode:
         raise SystemExit(result.returncode)
     if tests:
-        match = re.search(r"Total tests: (\d+), passed: (\d+), failed: (\d+)", result.stdout)
+        match = re.search(r"Total tests: (\d+), passed: (\d+), failed: (\d+)", output)
         if not match or int(match.group(1)) == 0 or match.group(1) != match.group(2) or match.group(3) != "0":
             raise SystemExit("Test runner must execute a nonzero passing suite")
 
